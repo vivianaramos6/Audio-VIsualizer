@@ -5,10 +5,9 @@ void ofApp::setup() {
     sound.load("beat.wav");           // Loads a sound file (in bin/data/)
     sound.setLoop(true);              // Makes the song loop indefinitely
     sound.setVolume(1);               // Sets the song volume
-    ofSetBackgroundColor(36, 32, 56); // Sets the Background Color
+    ofSetBackgroundColor(40, 21, 150); // Sets the Background Color
 }
 
-//--------------------------------------------------------------
 void ofApp::update() {
     /* The update method is called muliple times per second
     It's in charge of updating variables and the logic of our app */
@@ -37,10 +36,13 @@ void ofApp::draw() {
     vector<float> amplitudes = visualizer.getAmplitudes();
     if (mode == '1') {
         drawMode1(amplitudes);
+         ofSetBackgroundColor(204,255, 204);
     } else if (mode == '2') {
         drawMode2(amplitudes);
+         ofSetBackgroundColor(255, 204, 153);
     } else if (mode == '3') {
         drawMode3(amplitudes);
+        ofSetBackgroundColor(153, 204, 255);
     }
 
     // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
@@ -49,7 +51,7 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
-    ofSetColor(189, 45, 135);
+    ofSetColor(ofRandom(130), ofRandom(250), 255);
     ofDrawRectangle(2, ofGetHeight() - 100, 50, amplitudes[0]);
 }
 void ofApp::drawMode2(vector<float> amplitudes) {
@@ -59,7 +61,7 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     ofDrawBitmapString("Circle Radius Visualizer", 0, 15);
     int bands = amplitudes.size();
     for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 256, 18, 144); // Color varies between frequencies
+        ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
     }
 }
