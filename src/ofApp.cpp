@@ -36,29 +36,32 @@ void ofApp::draw() {
     vector<float> amplitudes = visualizer.getAmplitudes();
     if (mode == '1') {
         drawMode1(amplitudes);
-         ofSetBackgroundColor(204,255, 204);
+         ;
     } else if (mode == '2') {
         drawMode2(amplitudes);
-         ofSetBackgroundColor(255, 204, 153);
+         
     } else if (mode == '3') {
         drawMode3(amplitudes);
-        ofSetBackgroundColor(153, 204, 255);
+    
     }
 
-    // ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
+     //ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
+    ofSetBackgroundColor(214,212,226);
     ofSetColor(ofRandom(130), ofRandom(250), 255);
-    ofDrawRectangle(2, ofGetHeight() - 100, 50, amplitudes[0]);
+    ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0],10);
 }
+
 void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetLineWidth(5); // Sets the line width
     ofNoFill();        // Only the outline of shapes will be drawn
     ofSetColor(256);   // This resets the color of the "brush" to white
     ofDrawBitmapString("Circle Radius Visualizer", 0, 15);
+    ofSetBackgroundColor(153,153,255);
     int bands = amplitudes.size();
     for (int i = 0; i < bands; i++) {
         ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
@@ -69,6 +72,7 @@ void ofApp::drawMode2(vector<float> amplitudes) {
 void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
+    ofSetBackgroundColor(204,255,204);
     // YOUR CODE HERE
 }
 
