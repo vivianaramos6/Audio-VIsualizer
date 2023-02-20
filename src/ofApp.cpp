@@ -111,6 +111,22 @@ void ofApp::keyPressed(int key) {
         playing = !playing;
         break;
         
+    case '-' :                                                          // lower volume
+        if (sound.getVolume() <= 1 && sound.getVolume() > 0) {
+            sound.setVolume(sound.getVolume() - 0.01);
+        } else {
+            sound.setVolume(0);
+        }
+        break;
+
+    case '=' :                                                          // raise volume 
+        if (sound.getVolume() < 1 && sound.getVolume() >= 0) {
+            sound.setVolume(sound.getVolume() + 0.01);
+        } else {
+            sound.setVolume(1);
+        }
+        break;
+
     case '1':
         mode = '1';
         break;
