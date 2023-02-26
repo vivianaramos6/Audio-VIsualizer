@@ -82,9 +82,17 @@ void ofApp::keyPressed(int key) {
     switch (key) {
     case 'p':
         if (playing) {
-            sound.stop();
-        } else {
             sound.play();
+        } else {
+            sound.stop();
+        }
+        playing = !playing;
+        break;
+    case 'a':
+        if (playing) {
+            sound.setPaused(true);
+        } else{
+            sound.setPaused(false);
         }
         playing = !playing;
         break;
