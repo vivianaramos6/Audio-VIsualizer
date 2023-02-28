@@ -73,7 +73,7 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     int bands = amplitudes.size();
     if (!isPaused){
     for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
+        ofSetColor((bands - i) * 32 % 256, 118, 151); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
     }
     }
