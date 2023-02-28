@@ -73,13 +73,13 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     int bands = amplitudes.size();
     if (!isPaused){
     for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
+        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
     }
     }
     else{
         for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
+        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
     }
     }
@@ -108,6 +108,51 @@ void ofApp::keyPressed(int key) {
         isPaused = !isPaused;
         ampcopy = amplitudes;
         break;
+
+    case 'c' :
+        sound.load("beat.wav");           // Loads a sound file (in bin/data/)
+        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setVolume(1);               // Sets the song volume
+        playing = !playing;
+        break;
+
+    case 'd' :
+        sound.load("geesebeat.wav");           // Loads a sound file (in bin/data/)
+        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setVolume(1);               // Sets the song volume
+        playing = !playing;
+        break;
+
+    case 'e' :
+        sound.load("pigeon-coo.wav");           // Loads a sound file (in bin/data/)
+        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setVolume(1);               // Sets the song volume
+        playing = !playing;
+        break;
+    
+    case 'f' :
+        sound.load("rock-song.wav");           // Loads a sound file (in bin/data/)
+        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setVolume(1);               // Sets the song volume
+        playing = !playing;
+        break;
+        
+    case '-' :                                                          // lower volume
+        if (sound.getVolume() <= 1 && sound.getVolume() > 0) {
+            sound.setVolume(sound.getVolume() - 0.1);
+        } else {
+            sound.setVolume(0);
+        }
+        break;
+
+    case '=' :                                                          // raise volume 
+        if (sound.getVolume() < 1 && sound.getVolume() >= 0) {
+            sound.setVolume(sound.getVolume() + 0.1);
+        } else {
+            sound.setVolume(1);
+        }
+        break;
+
     case '1':
         mode = '1';
         break;
