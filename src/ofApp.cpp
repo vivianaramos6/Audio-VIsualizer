@@ -33,7 +33,7 @@ void ofApp::draw() {
     if (!playing) {
         ofDrawBitmapString("Press 'p' to play some music!", ofGetWidth() / 2 - 50, ofGetHeight() / 2);
     }
-    vector<float> amplitudes = visualizer.getAmplitudes();
+    amplitudes = visualizer.getAmplitudes();
     if (mode == '1') {
         drawMode1(amplitudes);
          ;
@@ -46,6 +46,8 @@ void ofApp::draw() {
     }
 
      //ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
+
+     
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
     ofFill();        // Drawn Shapes will be filled in with color
@@ -53,7 +55,13 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetBackgroundColor(214,212,226);
     ofSetColor(ofRandom(130), ofRandom(250), 255);
-    ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0],10);
+    if (!isPaused){
+        ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0],10);
+    }
+    else{
+        ofDrawRectRounded(2, ofGetHeight() - 100, 50, ampcopy[0],10);
+    }
+
 }
 
 void ofApp::drawMode2(vector<float> amplitudes) {
@@ -63,9 +71,17 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     ofDrawBitmapString("Circle Radius Visualizer", 0, 15);
     ofSetBackgroundColor(153,153,255);
     int bands = amplitudes.size();
+    if (!isPaused){
     for (int i = 0; i < bands; i++) {
         ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
         ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
+    }
+    }
+    else{
+        for (int i = 0; i < bands; i++) {
+        ofSetColor((bands - i) * 32 % 11, 186, 151); // Color varies between frequencies
+        ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
+    }
     }
 }
 
@@ -82,19 +98,15 @@ void ofApp::keyPressed(int key) {
     switch (key) {
     case 'p':
         if (playing) {
-            sound.play();
-        } else {
             sound.stop();
+        } else {
+            sound.play();
         }
         playing = !playing;
         break;
     case 'a':
-        if (playing) {
-            sound.setPaused(true);
-        } else{
-            sound.setPaused(false);
-        }
-        playing = !playing;
+        isPaused = !isPaused;
+        ampcopy = amplitudes;
         break;
     case '1':
         mode = '1';

@@ -11,12 +11,18 @@ class ofApp : public ofBaseApp {
 
     bool playing = false;
     char mode = '1';
+    bool isPaused = false;
 
     int cur_x, cur_y = 0;
     float sound_length;
 
     float progress = 0;
     float lastPos = 0;
+
+
+    vector<float> ampcopy;
+    vector<float> amplitudes;
+
 
   public:
     void setup();
