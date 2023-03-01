@@ -55,13 +55,15 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetBackgroundColor(214,212,226);
     ofSetColor(ofRandom(130), ofRandom(250), 255);
-    if (!isPaused){
-        ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0],10);
+    int bands = amplitudes.size();
+    for (int i = 0; i < bands; i++) {
+        if (!isPaused){
+            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, amplitudes[i],10);
+        }
+        else{
+            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, ampcopy[i],10);
+        }
     }
-    else{
-        ofDrawRectRounded(2, ofGetHeight() - 100, 50, ampcopy[0],10);
-    }
-
 }
 
 void ofApp::drawMode2(vector<float> amplitudes) {
