@@ -91,11 +91,7 @@ void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetBackgroundColor(204,255,204);
     // YOUR CODE HERE
 }
- void ofApp::songlist(vector<string>songs){
-    songs.push_back("beat.wav");
-        songs.push_back("rock-song.wav");
-        songs.push_back("pigeon-coo.wav");
- }
+ 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
@@ -176,8 +172,14 @@ void ofApp::keyPressed(int key) {
     }
     break;
 
+    case 'b':
+    sound.stop();
+    sound.load(songs[randomizer]);
+    sound.play();
+    break;
 
-    case 'l':
+
+    case 'l': 
      loop=!loop;
         
         song_index=0;
