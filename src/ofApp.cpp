@@ -47,6 +47,14 @@ void ofApp::draw() {
 
      //ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 
+    // progress bar
+    
+    ofSetColor(0,255,0);
+    ofFill();
+    if (progress != ofGetWidth()){
+       ofDrawRectangle(progress,ofGetHeight() - 50,ofGetWidth() * progress,100); 
+    }
+
      
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
@@ -55,13 +63,15 @@ void ofApp::drawMode1(vector<float> amplitudes) {
     ofDrawBitmapString("Rectangle Height Visualizer", 0, 15);
     ofSetBackgroundColor(214,212,226);
     ofSetColor(ofRandom(130), ofRandom(250), 255);
-    if (!isPaused){
-        ofDrawRectRounded(2, ofGetHeight() - 100, 50, amplitudes[0],10);
+    int bands = amplitudes.size();
+    for (int i = 0; i < bands; i++) {
+        if (!isPaused){
+            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, amplitudes[i],10);
+        }
+        else{
+            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, ampcopy[i],10);
+        }
     }
-    else{
-        ofDrawRectRounded(2, ofGetHeight() - 100, 50, ampcopy[0],10);
-    }
-
 }
 
 void ofApp::drawMode2(vector<float> amplitudes) {
@@ -108,47 +118,6 @@ void ofApp::keyPressed(int key) {
         isPaused = !isPaused;
         ampcopy = amplitudes;
         break;
-
-    case 'c' :
-        sound.load("beat.wav"); 
-        sound.setLoop(false);           // Loads a sound file (in bin/data/)             
-        playing = !playing;
-        break;
-
-    case 'd' :
-        sound.load("geesebeat.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);           // Makes the song loop indefinitely                 
-        playing = !playing;
-        break;
-
-    case 'e' :
-        sound.load("pigeon-coo.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);              // Makes the song loop indefinitely             
-        playing = !playing;
-        break;
-    
-    case 'f' :
-        sound.load("rock-song.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);              // Makes the song loop indefinitely            
-        playing = !playing;
-        break;
-        
-    case '-' :                                                          // lower volume
-        if (sound.getVolume() <= 1 && sound.getVolume() > 0) {
-            sound.setVolume(sound.getVolume() - 0.1);
-        } else {
-            sound.setVolume(0);
-        }
-        break;
-
-    case '=' :                                                          // raise volume 
-        if (sound.getVolume() < 1 && sound.getVolume() >= 0) {
-            sound.setVolume(sound.getVolume() + 0.1);
-        } else {
-            sound.setVolume(1);
-        }
-        break;
-
     case '1':
         mode = '1';
         break;
@@ -161,10 +130,10 @@ void ofApp::keyPressed(int key) {
     case 'r':
     repeat=!repeat;
     if(!repeat){
-        sound.setLoop(true);
+        sound.setLoop(false);
     }
     else{
-        sound.setLoop(false);
+        sound.setLoop(true);
     }
     break;
 
