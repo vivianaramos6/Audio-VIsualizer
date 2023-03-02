@@ -22,7 +22,10 @@ class ofApp : public ofBaseApp {
 
     vector<float> ampcopy;
     vector<float> amplitudes;
-
+    vector<string> songs;
+    bool repeat=false;
+    bool loop=false;
+    int song_index;
 
   public:
     void setup();
@@ -32,6 +35,7 @@ class ofApp : public ofBaseApp {
     void drawMode1(vector<float> amplitudes);
     void drawMode2(vector<float> amplitudes);
     void drawMode3(vector<float> amplitudes);
+    void songlist(vector<string>songs);
 
     void keyPressed(int key);
     void keyReleased(int key);
