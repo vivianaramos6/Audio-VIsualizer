@@ -25,4 +25,4 @@ Please fill out the information below for each member of the team:
 
 ### [Viviana Ramos ] : [viviana.ramos6@upr.edu]
 
-### [FULL STUDENT B NAME] : [STUDENT B UPR EMAIL]
+### [Diego Perez] : [diego.perez19@upr.edu]

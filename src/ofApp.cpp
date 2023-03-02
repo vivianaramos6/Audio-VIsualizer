@@ -47,6 +47,14 @@ void ofApp::draw() {
 
      //ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 
+    // progress bar
+    
+    ofSetColor(0,255,0);
+    ofFill();
+    if (progress != ofGetWidth()){
+       ofDrawRectangle(progress,ofGetHeight() - 50,ofGetWidth() * progress,100); 
+    }
+
      
 }
 void ofApp::drawMode1(vector<float> amplitudes) {
