@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp {
     vector<float> ampcopy;
     vector<float> amplitudes;
     vector<string> songs={"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"};
-    int randomizer=ofRandom(0,4);
+    int randomizer;
     bool repeat=false;
     bool loop=false;
     int song_index;

@@ -110,30 +110,26 @@ void ofApp::keyPressed(int key) {
         break;
 
     case 'c' :
-        sound.load("beat.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
+        sound.load("beat.wav"); 
+        sound.setLoop(false);           // Loads a sound file (in bin/data/)             
         playing = !playing;
         break;
 
     case 'd' :
         sound.load("geesebeat.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
+        sound.setLoop(false);           // Makes the song loop indefinitely                 
         playing = !playing;
         break;
 
     case 'e' :
         sound.load("pigeon-coo.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
+        sound.setLoop(false);              // Makes the song loop indefinitely             
         playing = !playing;
         break;
     
     case 'f' :
         sound.load("rock-song.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
+        sound.setLoop(false);              // Makes the song loop indefinitely            
         playing = !playing;
         break;
         
@@ -174,39 +170,11 @@ void ofApp::keyPressed(int key) {
 
     case 'b':
     sound.stop();
+    randomizer=ofRandom(songs.size());
     sound.load(songs[randomizer]);
     sound.play();
     break;
 
-
-    case 'l': 
-     loop=!loop;
-        
-        song_index=0;
-        loop=!loop;
-       
-
-    sound.setLoop(false);
-
-        while(!loop){
-            
-            sound.load(songs[song_index]);
-             sound.setVolume(1);
-             sound.play();
-        
-            song_index+=1;
-            if(song_index==3){
-                song_index=0;
-            }
-        }
-
-    if(loop){
-        sound.stop();
-    }
-
-        
-
-        break;
 
     }
 }
