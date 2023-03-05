@@ -19,6 +19,8 @@ class ofApp : public ofBaseApp {
     float progress = 0;
     float lastPos = 0;
 
+    bool is_dragging = false;
+
 
     vector<float> ampcopy;
     vector<float> amplitudes;

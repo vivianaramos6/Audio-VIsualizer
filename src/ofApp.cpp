@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
     sound.load("beat.wav");           // Loads a sound file (in bin/data/)
-    sound.setLoop(false);              // Makes the song loop indefinitely
+    sound.setLoop(true);              // Makes the song loop indefinitely
     sound.setVolume(1);               // Sets the song volume
     ofSetBackgroundColor(40, 21, 150); // Sets the Background Color
 }
@@ -27,7 +27,7 @@ void ofApp::draw() {
 
     float pos = playing ? progress : lastPos;
     int percent = pos * 100;
-    ofDrawBitmapString("Song Progress: " + ofToString(percent) + "%", 0, 30);
+    ofDrawBitmapString("Song Progress: " + ofToString(percent) + "%", 0, 45);
 
     // Mode Selection
     if (!playing) {
@@ -45,14 +45,17 @@ void ofApp::draw() {
     
     }
 
-     //ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
+    ofSetColor(255);
+    ofFill();
+    ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 
     // progress bar
     
     ofSetColor(0,255,0);
     ofFill();
     if (progress != ofGetWidth()){
-       ofDrawRectangle(progress,ofGetHeight() - 50,ofGetWidth() * progress,100); 
+        ofRectangle rect (progress,ofGetHeight() - 50,ofGetWidth() * progress,100);
+        ofDrawRectangle(rect); 
     }
 
      
@@ -208,16 +211,44 @@ void ofApp::mouseMoved(int x, int y) {
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
+    ofRectangle rect (progress,ofGetHeight() - 50,ofGetWidth() * progress,100);
+    if (rect.getHeight() >= rect.getHeight() - 50){
+        if (button == OF_MOUSE_BUTTON_LEFT && is_dragging){
+            float X = float(x);
+            float width = float(ofGetWidth());
+            float pct = X / width;
+            sound.setPosition(pct);
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
+    ofRectangle rect (progress,ofGetHeight() - 50,ofGetWidth() * progress,100);
+    if (rect.getHeight() >= rect.getHeight() - 50){
+        if (button == OF_MOUSE_BUTTON_LEFT){
+            float X = float(x);
+            float width = float(ofGetWidth());
+            float pct = X / width;
+            sound.setPosition(pct);
+            is_dragging = true;
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
+    ofRectangle rect (progress,ofGetHeight() - 50,ofGetWidth() * progress,100);
+    if (rect.getHeight() >= rect.getHeight() - 50){
+        if (button == OF_MOUSE_BUTTON_LEFT && is_dragging){
+            float X = float(x);
+            float width = float(ofGetWidth());
+            float pct = X / width;
+            sound.setPosition(pct);
+            is_dragging = false;
+        }
+    }
 }
-
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y) {
 }
