@@ -27,7 +27,7 @@ class ofApp : public ofBaseApp {
     vector<string> songs={"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"};
     int randomizer;
     bool repeat=false;
-    bool loop=false;
+    bool loop = false;
     int song_index;
 
   public:
