@@ -139,6 +139,7 @@ void ofApp::drawMode3(vector<float> amplitudes) {
     ofDrawBitmapString("ni modo  Visualizer", 0, 15);
     ofSetBackgroundColor(43,22,33);
     ofNoFill();
+    
 }
      
 
