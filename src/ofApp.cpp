@@ -14,6 +14,18 @@ void ofApp::update() {
     ofSoundUpdate();               // Updates all sound players
     visualizer.updateAmplitudes(); // Updates Amplitudes for visualizer
     progress = sound.getPosition();
+
+
+    if (song_index == songs.size() - 1 && loop){
+        song_index = 0;
+    }
+
+    if (progress >= 0.995 && loop){
+            sound.load(songs[song_index]);
+            sound.play();
+            song_index++;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -221,6 +233,11 @@ void ofApp::keyPressed(int key) {
     case '3':
         mode = '3';
         break;
+
+    case 'l' :
+        loop = !loop;
+        break;
+    
     case 'r':
     repeat=!repeat;
     if(!repeat){
@@ -237,8 +254,6 @@ void ofApp::keyPressed(int key) {
     sound.load(songs[randomizer]);
     sound.play();
     break;
-
-
     }
 }
 
