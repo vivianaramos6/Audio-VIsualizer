@@ -3,6 +3,7 @@
 #include "AudioVisualizer.hpp"
 #include "ofMain.h"
 
+
 class ofApp : public ofBaseApp {
 
   private:
@@ -24,7 +25,7 @@ class ofApp : public ofBaseApp {
 
     vector<float> ampcopy;
     vector<float> amplitudes;
-    vector<string> songs={"beat.wav","geesebeat.wav","pigeon-coo.wav","rock-song.wav"};
+    vector<string> songs={"pokemoncenter","eternaforest.wav","lostwoods.wav","mariounderground.wav","greengreens.wav"};
     int randomizer;
     bool repeat=false;
     bool loop=false;
@@ -50,4 +51,6 @@ class ofApp : public ofBaseApp {
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    ofImage stars;
+
 };
