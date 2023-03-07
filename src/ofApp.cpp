@@ -141,27 +141,45 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetBackgroundColor(9,20,60);
     int bands = amplitudes.size();
     if (!isPaused){
-    for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
-        ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
-    }
+        for (int i = 0; i < bands; i++) {
+            ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
+            ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
+        }
     }
     else{
         for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
-        ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
-    }
+            ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
+            ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
+        }
     }
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
+
     ofSetColor(256); // This resets the color of the "brush" to white
-    ofDrawBitmapString("ni modo  Visualizer", 0, 15);
-    ofSetBackgroundColor(43,22,33);
-    ofNoFill();
-    
+    ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
+    ofSetBackgroundColor(100,255,100);
+    // YOUR CODE HERE
+    int bands = amplitudes.size();
+        for (int i = 0; i < bands; i++){
+            if (!isPaused){
+                ofSetColor(0,0,0);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
+                
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
+        } else {
+                ofSetColor(0,0,0);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i] * - 1) * 1.5);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i]) * 1.5);
+                
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i] * - 1) * 1.5);
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i]) * 1.5);
+        }
+    }
 }
- 
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
@@ -241,7 +259,7 @@ void ofApp::keyPressed(int key) {
             currentMode = "looping ";
         }
 
-        if (loop == false) {
+        if (looping == false) {
             currentMode = "None";
         }
         break;
