@@ -14,6 +14,7 @@ void ofApp::update() {
     ofSoundUpdate();               // Updates all sound players
     visualizer.updateAmplitudes(); // Updates Amplitudes for visualizer
     progress = sound.getPosition();
+   
 }
 
 //--------------------------------------------------------------
@@ -24,6 +25,8 @@ void ofApp::draw() {
     // Progress Bar
     ofSetColor(256);
     ofFill();
+  
+    ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
     ofDrawBitmapString("press 'a' to pause visualizer",0,60);
     ofDrawBitmapString("press 'c' to play 'Green Greens'",0,75);
     ofDrawBitmapString("press 'd' to play 'Lost Woods'",0,90);
@@ -32,6 +35,32 @@ void ofApp::draw() {
      ofDrawBitmapString("press 'g' to play 'Eterna Forest'",0,135);
      ofDrawBitmapString("press '-' to lower volume",ofGetWidth()-250,15);
      ofDrawBitmapString("press '+' to increase volume",ofGetWidth()-250,30);
+       ofSetColor(255,255,255,100);
+    ofFill();
+    if (progress != ofGetWidth()){
+        ofRectangle rect (progress,ofGetHeight()-50,ofGetWidth(),10);
+        ofDrawRectRounded(rect, 25); 
+    }
+
+    //progress ball
+    
+    ofSetColor(255,255,255);
+    ofFill();
+    if (progress != ofGetWidth()){
+        ofDrawCircle(ofGetWidth()*progress,ofGetHeight()-45,8.5);
+    }
+
+
+
+
+    // progress bar
+    
+    ofSetColor(255,255,255);
+    ofFill();
+    if (progress != ofGetWidth()){
+        ofRectangle rect (progress,ofGetHeight()-50,ofGetWidth() * progress,10);
+        ofDrawRectRounded(rect, 25); 
+    }
 
 
     
@@ -58,38 +87,10 @@ void ofApp::draw() {
     
     }
 
-    ofSetColor(255);
-    ofFill();
-    ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
+   
 
 
-    //empty progress
-    ofSetColor(255,255,255,100);
-    ofFill();
-    if (progress != ofGetWidth()){
-        ofRectangle rect (progress,ofGetHeight()-50,ofGetWidth(),10);
-        ofDrawRectRounded(rect, 25); 
-    }
-
-    //progress ball
-    
-    ofSetColor(255,255,255);
-    ofFill();
-    if (progress != ofGetWidth()){
-        ofDrawCircle(ofGetWidth()*progress,ofGetHeight()-45,8.5);
-    }
-
-
-
-
-    // progress bar
-    
-    ofSetColor(255,255,255);
-    ofFill();
-    if (progress != ofGetWidth()){
-        ofRectangle rect (progress,ofGetHeight()-50,ofGetWidth() * progress,10);
-        ofDrawRectRounded(rect, 25); 
-    }
+   
 
 
 
@@ -138,10 +139,9 @@ void ofApp::drawMode3(vector<float> amplitudes) {
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("ni modo  Visualizer", 0, 15);
     ofSetBackgroundColor(43,22,33);
-    ofNoFill();
-    
+   
 }
-     
+
 
 
  
@@ -160,38 +160,39 @@ void ofApp::keyPressed(int key) {
     case 'a':
         isPaused = !isPaused;
         ampcopy = amplitudes;
+        // rotationcopy=rotation;
         break;
 
     case 'c' :
         sound.load("greengreens.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setLoop(false);              // Makes the song loop indefinitely
         sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
 
     case 'd' :
         sound.load("lostwoods.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setLoop(false);              // Makes the song loop indefinitely
         sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
 
     case 'e' :
         sound.load("pokemoncenter.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setLoop(false);              // Makes the song loop indefinitely
         sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
     
     case 'f' :
         sound.load("mariounderground.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setLoop(false);              // Makes the song loop indefinitely
         sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
     case 'g' :
         sound.load("eternaforest.wav");           // Loads a sound file (in bin/data/)
-        sound.setLoop(true);              // Makes the song loop indefinitely
+        sound.setLoop(false);              // Makes the song loop indefinitely
         sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
