@@ -53,6 +53,7 @@ void ofApp::draw() {
 
     } else {
         ofDrawBitmapString("mode currently selected: " + currentMode, ofGetWidth()-260,45);
+        ofDrawBitmapString("Press key again to exit mode", ofGetWidth()-260,60);
     }
     
     
@@ -239,6 +240,10 @@ void ofApp::keyPressed(int key) {
             looping = !looping;
             currentMode = "looping ";
         }
+
+        if (loop == false) {
+            currentMode = "None";
+        }
         break;
     
     case 'r':
@@ -253,7 +258,9 @@ void ofApp::keyPressed(int key) {
         replay = !replay;
         currentMode = "repeat";
     }
-   
+     if (replay == false){
+        currentMode = "None";
+     }   
     break;
 
     case 'b':
@@ -264,6 +271,10 @@ void ofApp::keyPressed(int key) {
             sound.play();
             shuffle = !shuffle;
             currentMode = "shuffle";
+        }
+
+        if (shuffle == false){
+            currentMode = "None";
         }
     break;
     }
