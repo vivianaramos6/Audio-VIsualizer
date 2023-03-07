@@ -31,6 +31,12 @@ class ofApp : public ofBaseApp {
     bool loop = false;
     int song_index;
 
+    bool looping;
+    bool replay;
+    bool shuffle;
+
+    string currentMode = "None";
+
   public:
     void setup();
     void update();

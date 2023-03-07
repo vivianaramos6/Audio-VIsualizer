@@ -39,12 +39,23 @@ void ofApp::draw() {
     ofDrawBitmapString("press 'a' to pause visualizer",0,60);
     ofDrawBitmapString("press 'c' to play 'Green Greens'",0,75);
     ofDrawBitmapString("press 'd' to play 'Lost Woods'",0,90);
-     ofDrawBitmapString("press 'e' to play 'Pokemon Center'",0,105);
-     ofDrawBitmapString("press 'f' to play 'Mario Underground Theme'",0,120);
-     ofDrawBitmapString("press 'g' to play 'Eterna Forest'",0,135);
-     ofDrawBitmapString("press '-' to lower volume",ofGetWidth()-250,15);
-     ofDrawBitmapString("press '+' to increase volume",ofGetWidth()-250,30);
+    ofDrawBitmapString("press 'e' to play 'Pokemon Center'",0,105);
+    ofDrawBitmapString("press 'f' to play 'Mario Underground Theme'",0,120);
+    ofDrawBitmapString("press 'g' to play 'Eterna Forest'",0,135);
+    ofDrawBitmapString("press '-' to lower volume",ofGetWidth()-260,15);
+    ofDrawBitmapString("press '+' to increase volume",ofGetWidth()-260,30);
+    
+    if (currentMode == "None"){
+        ofDrawBitmapString("Select a mode: ", ofGetWidth()-260,45);
+        ofDrawBitmapString("'l' - looping", ofGetWidth()-260,60);
+        ofDrawBitmapString("'r' - repeat", ofGetWidth()-260,75);
+        ofDrawBitmapString("'b' - shuffle", ofGetWidth()-260,90);
 
+    } else {
+        ofDrawBitmapString("mode currently selected: " + currentMode, ofGetWidth()-260,45);
+    }
+    
+    
 
     
 
@@ -146,16 +157,12 @@ void ofApp::drawMode2(vector<float> amplitudes) {
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
-    
     ofSetColor(256); // This resets the color of the "brush" to white
     ofDrawBitmapString("ni modo  Visualizer", 0, 15);
     ofSetBackgroundColor(43,22,33);
     ofNoFill();
     
 }
-     
-
-
  
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
@@ -235,24 +242,37 @@ void ofApp::keyPressed(int key) {
         break;
 
     case 'l' :
-        loop = !loop;
+        if (!replay && !shuffle){
+            loop = !loop;
+            looping = !looping;
+            currentMode = "looping ";
+        }
         break;
     
     case 'r':
-    repeat=!repeat;
-    if(!repeat){
-        sound.setLoop(false);
+    if (!looping && !shuffle){
+        repeat=!repeat;
+        if(!repeat){
+            sound.setLoop(false);
+        }
+        else{
+            sound.setLoop(true);
+        }
+        replay = !replay;
+        currentMode = "repeat";
     }
-    else{
-        sound.setLoop(true);
-    }
+   
     break;
 
     case 'b':
-    sound.stop();
-    randomizer=ofRandom(songs.size());
-    sound.load(songs[randomizer]);
-    sound.play();
+        if (!replay && !looping){
+            sound.stop();
+            randomizer=ofRandom(songs.size());
+            sound.load(songs[randomizer]);
+            sound.play();
+            shuffle = !shuffle;
+            currentMode = "shuffle";
+        }
     break;
     }
 }
