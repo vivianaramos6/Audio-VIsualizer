@@ -14,7 +14,18 @@ void ofApp::update() {
     ofSoundUpdate();               // Updates all sound players
     visualizer.updateAmplitudes(); // Updates Amplitudes for visualizer
     progress = sound.getPosition();
-   
+
+
+    if (song_index == songs.size() - 1 && loop){ 
+        song_index = 0;
+    }
+
+    if (progress >= 0.995 && loop){
+            sound.load(songs[song_index]);
+            sound.play();
+            song_index++;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -22,7 +33,7 @@ void ofApp::draw() {
     /* The update method is called muliple times per second
     It's in charge of drawing all figures and text on screen */
 
-    // Progress Bar
+
     ofSetColor(256);
     ofFill();
   
@@ -30,12 +41,26 @@ void ofApp::draw() {
     ofDrawBitmapString("press 'a' to pause visualizer",0,60);
     ofDrawBitmapString("press 'c' to play 'Green Greens'",0,75);
     ofDrawBitmapString("press 'd' to play 'Lost Woods'",0,90);
-     ofDrawBitmapString("press 'e' to play 'Pokemon Center'",0,105);
-     ofDrawBitmapString("press 'f' to play 'Mario Underground Theme'",0,120);
-     ofDrawBitmapString("press 'g' to play 'Eterna Forest'",0,135);
-     ofDrawBitmapString("press '-' to lower volume",ofGetWidth()-250,15);
-     ofDrawBitmapString("press '+' to increase volume",ofGetWidth()-250,30);
-       ofSetColor(255,255,255,100);
+    ofDrawBitmapString("press 'e' to play 'Pokemon Center'",0,105);
+    ofDrawBitmapString("press 'f' to play 'Mario Underground Theme'",0,120);
+    ofDrawBitmapString("press 'g' to play 'Eterna Forest'",0,135);
+    ofDrawBitmapString("press '-' to lower volume",ofGetWidth()-260,15);
+    ofDrawBitmapString("press '+' to increase volume",ofGetWidth()-260,30);
+    
+    if (currentMode == "None"){
+        ofDrawBitmapString("Select a mode: ", ofGetWidth()-260,45);
+        ofDrawBitmapString("'l' - looping", ofGetWidth()-260,60);
+        ofDrawBitmapString("'r' - repeat", ofGetWidth()-260,75);
+        ofDrawBitmapString("'b' - shuffle", ofGetWidth()-260,90);
+
+    } else {
+        ofDrawBitmapString("mode currently selected: " + currentMode, ofGetWidth()-260,45);
+        ofDrawBitmapString("Press key again to exit mode", ofGetWidth()-260,60);
+    }
+    
+    
+    //empty progress(grey bar)
+    ofSetColor(255,255,255,100);
     ofFill();
     if (progress != ofGetWidth()){
         ofRectangle rect (progress,ofGetHeight()-50,ofGetWidth(),10);
@@ -43,7 +68,6 @@ void ofApp::draw() {
     }
 
     //progress ball
-    
     ofSetColor(255,255,255);
     ofFill();
     if (progress != ofGetWidth()){
@@ -51,10 +75,7 @@ void ofApp::draw() {
     }
 
 
-
-
     // progress bar
-    
     ofSetColor(255,255,255);
     ofFill();
     if (progress != ofGetWidth()){
@@ -87,10 +108,11 @@ void ofApp::draw() {
     
     }
 
-   
+    ofSetColor(255);
+    ofFill();
+    ofDrawBitmapString("Current Mouse Position: " + ofToString(cur_x) + ", " + ofToString(cur_y), 0, 30);
 
 
-   
 
 
 
@@ -108,7 +130,7 @@ void ofApp::drawMode1(vector<float> amplitudes) {
             ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, amplitudes[i],10);
         }
         else{
-            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, ampcopy[i],10);
+            ofDrawRectRounded(i * (ofGetWidth() / bands), ofGetHeight() - 100, ofGetWidth() / bands, ampcopy[i],10); //copy to pause visualizer
         }
     }
 }
@@ -121,30 +143,45 @@ void ofApp::drawMode2(vector<float> amplitudes) {
     ofSetBackgroundColor(9,20,60);
     int bands = amplitudes.size();
     if (!isPaused){
-    for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
-        ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
-    }
+        for (int i = 0; i < bands; i++) {
+            ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
+            ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, amplitudes[0] / (i + 1));
+        }
     }
     else{
         for (int i = 0; i < bands; i++) {
-        ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
-        ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
-    }
+            ofSetColor((bands - i) * 32 % 256, 186, 151); // Color varies between frequencies
+            ofDrawCircle(ofGetWidth() / 2, ofGetHeight() / 2, ampcopy[0] / (i + 1));
+        }
     }
 }
 
 void ofApp::drawMode3(vector<float> amplitudes) {
-    
+
     ofSetColor(256); // This resets the color of the "brush" to white
-    ofDrawBitmapString("ni modo  Visualizer", 0, 15);
-    ofSetBackgroundColor(43,22,33);
-   
+    ofDrawBitmapString("Rectangle Width Visualizer", 0, 15);
+    ofSetBackgroundColor(100,255,100);
+    
+    int bands = amplitudes.size();
+        for (int i = 0; i < bands; i++){
+            if (!isPaused){
+                ofSetColor(0,0,0);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
+                
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
+        } else {
+                ofSetColor(0,0,0);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i] * - 1) * 1.5);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i]) * 1.5);
+                
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i] * - 1) * 1.5);
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (ampcopy[i]) * 1.5);
+        }
+    }
 }
 
-
-
- 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     // This method is called automatically when any key is pressed
@@ -166,34 +203,29 @@ void ofApp::keyPressed(int key) {
     case 'c' :
         sound.load("greengreens.wav");           // Loads a sound file (in bin/data/)
         sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
 
     case 'd' :
         sound.load("lostwoods.wav");           // Loads a sound file (in bin/data/)
         sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
 
     case 'e' :
         sound.load("pokemoncenter.wav");           // Loads a sound file (in bin/data/)
         sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
     
     case 'f' :
         sound.load("mariounderground.wav");           // Loads a sound file (in bin/data/)
         sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
     case 'g' :
         sound.load("eternaforest.wav");           // Loads a sound file (in bin/data/)
         sound.setLoop(false);              // Makes the song loop indefinitely
-        sound.setVolume(1);               // Sets the song volume
         playing = !playing;
         break;
         
@@ -222,24 +254,50 @@ void ofApp::keyPressed(int key) {
     case '3':
         mode = '3';
         break;
+
+    case 'l' :
+        if (!replay && !shuffle){
+            loop = !loop;
+            looping = !looping; //looping is to verify if shuffle or repeat can be used
+            currentMode = "looping ";
+        }
+
+        if (looping == false) {
+            currentMode = "None";
+        }
+        break;
+    
     case 'r':
-    repeat=!repeat;
-    if(!repeat){
-        sound.setLoop(false);
+    if (!looping && !shuffle){
+        repeat=!repeat;
+        if(!repeat){
+            sound.setLoop(false);
+        }
+        else{
+            sound.setLoop(true);
+        }
+        replay = !replay; //replay is to verify is shuffle and loop can be used
+        currentMode = "repeat";
     }
-    else{
-        sound.setLoop(true);
-    }
+     if (replay == false){
+        currentMode = "None";
+     }   
     break;
 
     case 'b':
-    sound.stop();
-    randomizer=ofRandom(songs.size());
-    sound.load(songs[randomizer]);
-    sound.play();
+        if (!replay && !looping){
+            sound.stop();
+            randomizer=ofRandom(songs.size());
+            sound.load(songs[randomizer]);
+            sound.play();
+            shuffle = !shuffle;
+            currentMode = "shuffle";
+        }
+
+        if (shuffle == false){
+            currentMode = "None";
+        }
     break;
-
-
     }
 }
 

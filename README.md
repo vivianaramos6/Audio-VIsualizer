@@ -26,3 +26,7 @@ Please fill out the information below for each member of the team:
 ### [Viviana Ramos ] : [viviana.ramos6@upr.edu]
 
 ### [Diego Perez] : [diego.perez19@upr.edu]
+
+Aditional Features:
+*added instructions
+*added different songs

@@ -28,8 +28,14 @@ class ofApp : public ofBaseApp {
     vector<string> songs={"pokemoncenter","eternaforest.wav","lostwoods.wav","mariounderground.wav","greengreens.wav"};
     int randomizer;
     bool repeat=false;
-    bool loop=false;
+    bool loop = false;
     int song_index;
+
+    bool looping;
+    bool replay;
+    bool shuffle;
+
+    string currentMode = "None";
 
   public:
     void setup();
