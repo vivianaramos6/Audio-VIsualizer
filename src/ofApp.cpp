@@ -166,10 +166,10 @@ void ofApp::drawMode3(vector<float> amplitudes) {
         for (int i = 0; i < bands; i++){
             if (!isPaused){
                 ofSetColor(0,0,0);
-                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5); //multiplication by -1 inverted y values
                 ofDrawRectangle(i * (ofGetWidth() / bands), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
                 
-                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5);
+                ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i] * - 1) * 1.5); //x values were also inverted
                 ofDrawRectangle((i * (ofGetWidth() / bands)) * -1 + ofGetWidth(), ofGetHeight() / 2, (ofGetWidth() / (bands + 200)), (amplitudes[i]) * 1.5);
         } else {
                 ofSetColor(0,0,0);
