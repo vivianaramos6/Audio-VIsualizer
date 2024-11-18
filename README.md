@@ -19,13 +19,7 @@ This is the class that brings most things together. Here, you will find the code
 ## AudioVisualizer
 The AudioVisualizer class provides us with the data needed to do the visualization. Using some of the tools OpenFrameworks provides us and math, we can obtain information such as the amplitude of the sound. 
 
-# Student Info
 
-Please fill out the information below for each member of the team:
-
-### [Viviana Ramos ] : [viviana.ramos6@upr.edu]
-
-### [Diego Perez] : [diego.perez19@upr.edu]
 
 Aditional Features:
 *added instructions
